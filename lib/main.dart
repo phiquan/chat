@@ -1,3 +1,4 @@
+import 'package:chat/screen/navigation.dart';
 import 'package:chat/screen/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
-      home: const Splash_Screen(),
+      home: const BodyNavigationBar(),
     );
   }
 }
