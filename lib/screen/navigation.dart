@@ -1,3 +1,4 @@
+import 'package:chat/screen/add/add_friend.dart';
 import 'package:chat/screen/chat/chat_screen.dart';
 import 'package:chat/screen/profile/main_profile.dart';
 import 'package:flutter/material.dart';
@@ -37,10 +38,7 @@ class BodyNavigationBarState extends State<BodyNavigationBar>
           index: _selectedIndex,
           children: [
             listCheck[0] ? const ChatScreen() : const SizedBox.shrink(),
-            listCheck[1]
-                ? Container(
-                    color: Colors.red, height: Get.height, width: Get.width)
-                : const SizedBox.shrink(),
+            listCheck[1] ? const AddFriend() : const SizedBox.shrink(),
             listCheck[2] ? const ProFile() : const SizedBox.shrink(),
           ],
         ),
@@ -62,7 +60,7 @@ class BodyNavigationBarState extends State<BodyNavigationBar>
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.green,
+        selectedItemColor: Colors.blue,
         selectedLabelStyle: TextStyle(
             color: Colors.lightBlue,
             fontSize: MediaQuery.of(context).size.width * 0.025,

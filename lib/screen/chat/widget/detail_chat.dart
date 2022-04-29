@@ -73,38 +73,53 @@ class _DetailChatState extends State<DetailChat> {
 
   Widget _titleAppBar() {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Container(
-          height: 40,
-          width: 40,
-          decoration: const BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(20)),
-              color: Colors.grey),
-        ),
-        const SizedBox(
-          width: 16,
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
+        Row(
           children: [
-            Text(
-              'Name',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: Colors.indigo[900],
-              ),
+            Container(
+              height: 40,
+              width: 40,
+              decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                  color: Colors.grey),
             ),
             const SizedBox(
-              height: 6,
+              width: 12,
             ),
-            const Text(
-              'Đang hoạt động',
-              style: TextStyle(fontSize: 12),
-            )
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Name',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.indigo[900],
+                  ),
+                ),
+                const SizedBox(
+                  height: 2,
+                ),
+                const Text(
+                  'Đang hoạt động',
+                  style: TextStyle(fontSize: 12),
+                )
+              ],
+            ),
           ],
-        )
+        ),
+        Padding(
+          padding: EdgeInsets.only(right: 16.0),
+          child: InkWell(
+            onTap: (){
+              if (kDebugMode) {
+                print('onTap infor');
+              }
+            },
+            child: const Icon(Icons.info_outline),
+          ),
+        ),
       ],
     );
   }
@@ -113,7 +128,11 @@ class _DetailChatState extends State<DetailChat> {
     return Container(
       height: Get.height,
       width: Get.width,
-      color: Colors.grey,
+      decoration: const BoxDecoration(
+          color: Colors.grey,
+          image: DecorationImage(
+              image: AssetImage('assets/images/deltabackground.jpg'),
+              fit: BoxFit.cover)),
     );
   }
 
@@ -209,9 +228,9 @@ class _DetailChatState extends State<DetailChat> {
             child: Padding(
               padding: const EdgeInsets.only(right: 15),
               child: messageContentController.text.isNotEmpty
-                  ? Icon(
+                  ? const Icon(
                       Icons.send,
-                      color: Colors.indigo[900],
+                      color: Colors.blue,
                       size: 25,
                     )
                   : const Icon(

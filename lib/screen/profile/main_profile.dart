@@ -1,3 +1,4 @@
+import 'package:chat/screen/profile/component/inforRow.dart';
 import 'package:flutter/material.dart';
 
 class ProFile extends StatelessWidget {
@@ -5,10 +6,34 @@ class ProFile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: const [
-        
-      ],
+    return Center(
+      child: Column(
+        children: [
+          const SizedBox(
+            height: 75,
+          ),
+          Container(
+            height: 100,
+            width: 100,
+            decoration: const BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(50)),
+                color: Colors.grey),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          const Text(
+            'Võ Phi Quân',
+            style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(
+            height: 4,
+          ),
+          const InforRow(title: 'Thông tin tài khoản',),
+          const InforRow(title: 'Cài đặt',),
+          const InforRow(title: 'Đăng xuất',),
+        ],
+      ),
     );
   }
 }
