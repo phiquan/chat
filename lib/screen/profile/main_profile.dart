@@ -1,5 +1,7 @@
+import 'package:chat/screen/login/login_screen.dart';
 import 'package:chat/screen/profile/component/inforRow.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ProFile extends StatelessWidget {
   const ProFile({Key key}) : super(key: key);
@@ -29,9 +31,18 @@ class ProFile extends StatelessWidget {
           const SizedBox(
             height: 4,
           ),
-          const InforRow(title: 'Thông tin tài khoản',),
-          const InforRow(title: 'Cài đặt',),
-          const InforRow(title: 'Đăng xuất',),
+          const InforRow(
+            title: 'Thông tin tài khoản',
+          ),
+          const InforRow(
+            title: 'Cài đặt',
+          ),
+          InforRow(
+            title: 'Đăng xuất',
+            onTap: () {
+              Get.to(() => const LoginScreen());
+            },
+          ),
         ],
       ),
     );

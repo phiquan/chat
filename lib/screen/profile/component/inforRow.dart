@@ -17,6 +17,7 @@ class InforRow extends StatelessWidget {
         if (kDebugMode) {
           print('onTap infoRow');
         }
+        onTap();
       },
       child: Card(
         child: SizedBox(

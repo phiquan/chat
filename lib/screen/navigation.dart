@@ -2,7 +2,6 @@ import 'package:chat/screen/add/add_friend.dart';
 import 'package:chat/screen/chat/chat_screen.dart';
 import 'package:chat/screen/profile/main_profile.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 List listCheck = [true, false, false];
 
