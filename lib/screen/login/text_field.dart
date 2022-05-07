@@ -5,13 +5,15 @@ class TextFieldCustom extends StatelessWidget {
   final String hintText;
   final Function(String value) onChange;
   final Function(String value) validatorFunction;
+  final TextEditingController textEditingController;
 
   const TextFieldCustom(
       {Key key,
       this.hintText,
       this.onChange,
       this.validatorFunction,
-      this.title})
+      this.title,
+      this.textEditingController})
       : super(key: key);
 
   @override
@@ -27,6 +29,7 @@ class TextFieldCustom extends StatelessWidget {
           height: 10,
         ),
         TextFormField(
+          controller: textEditingController,
           decoration: InputDecoration(
             contentPadding:
                 const EdgeInsets.only(left: 15, top: 5, bottom: 10, right: 10),

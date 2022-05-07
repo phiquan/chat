@@ -1,6 +1,10 @@
+import 'dart:io';
+
+import 'package:chat/screen/chat/widget/gallery.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 class DetailChat extends StatefulWidget {
   const DetailChat({Key key}) : super(key: key);
@@ -110,9 +114,9 @@ class _DetailChatState extends State<DetailChat> {
           ],
         ),
         Padding(
-          padding: EdgeInsets.only(right: 16.0),
+          padding: const EdgeInsets.only(right: 16.0),
           child: InkWell(
-            onTap: (){
+            onTap: () {
               if (kDebugMode) {
                 print('onTap infor');
               }
@@ -158,14 +162,34 @@ class _DetailChatState extends State<DetailChat> {
               : Row(
                   children: [
                     InkWell(
-                        onTap: () async {},
+                        onTap: () async {
+                          await chupAnh();
+                        },
                         child: const Icon(
                           Icons.camera_alt,
                           size: 25,
                         )),
                     const SizedBox(width: 10),
                     InkWell(
-                        onTap: () async {},
+                        onTap: () async {
+                          Get.bottomSheet(DraggableScrollableSheet(
+                            initialChildSize: 0.8,
+                            minChildSize: 0.6,
+                            maxChildSize: 0.8,
+                            expand: false,
+                            builder: (_, controller) {
+                              return
+                                  // Container(color: Colors.blue,);
+                                  Gallery(
+                                idConversation: 1,
+                                heightPicker: null,
+                                scrollControllerPicker: controller,
+                                nameUser: 'quan',
+                                userID: 1,
+                              );
+                            },
+                          ));
+                        },
                         child: const Icon(
                           Icons.photo,
                           size: 25,
@@ -242,5 +266,22 @@ class _DetailChatState extends State<DetailChat> {
         ],
       ),
     );
+  }
+
+  final picker = ImagePicker();
+
+  Future chupAnh() async {
+    try {
+      final pickedFile = await picker.pickImage(
+        source: ImageSource.camera,
+      );
+
+      if (pickedFile == null) return;
+      // var fileUpload = File(pickedFile.path);
+
+    } catch (e) {
+      Get.snackbar('Thông Báo', 'Chụp ảnh không thành công',
+          snackPosition: SnackPosition.TOP, backgroundColor: Colors.grey[200]);
+    }
   }
 }

@@ -1,10 +1,14 @@
+import 'package:chat/screen/login/login_phone_screen.dart';
 import 'package:chat/screen/login/login_screen.dart';
 import 'package:chat/screen/navigation.dart';
 import 'package:chat/screen/splash.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 void main() {
+  // WidgetsFlutterBinding.ensureInitialized();
+  // await Firebase.initializeApp();
   runApp(const MyApp());
 }
 

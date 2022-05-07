@@ -56,7 +56,7 @@ class AddFriend extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                // Get.to(() => const QRCodeScreen());
+                Get.to(() => const QRCodeScreen());
               },
               child: const Icon(
                 Icons.qr_code,

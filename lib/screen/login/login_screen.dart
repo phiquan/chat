@@ -11,8 +11,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  String email = '';
-  String pass = '';
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passController = TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -45,11 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         return null;
                       }
                     },
-                    onChange: (value) {
-                      setState(() {
-                        email = value;
-                      });
-                    },
+                    onChange: (value) {},
                   ),
                   const SizedBox(
                     height: 15,
@@ -64,9 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       }
                     },
                     onChange: (value) {
-                      setState(() {
-                        pass = value;
-                      });
+                      setState(() {});
                     },
                   ),
                   const SizedBox(
