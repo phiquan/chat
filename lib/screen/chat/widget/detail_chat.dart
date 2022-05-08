@@ -1,5 +1,4 @@
-import 'dart:io';
-
+import 'package:chat/encrypted/des3.dart';
 import 'package:chat/screen/chat/widget/gallery.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -241,11 +240,13 @@ class _DetailChatState extends State<DetailChat> {
           ),
           InkWell(
             onTap: () {
-              // print('onTap FloatingActionButton send');
+              if (kDebugMode) {
+                print(Des.encrypted(messageContentController.text));
+                print('---------------');
+                print(Des.decrypted(Des.encrypted(messageContentController.text)));
+              }
               if (messageContentController.text != null &&
                   messageContentController.text != "") {
-                // print('kí tự nhập là:   ');
-                // print(messageContentController.text);
                 messageContentController.clear();
               }
             },

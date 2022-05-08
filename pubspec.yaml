@@ -23,6 +23,10 @@ dependencies:
   qr_code_scanner: ^0.7.0
   image_picker: 0.8.5
   photo_manager: ^0.6.0
+  dart_des: ^1.0.0
+  convert: ^3.0.1
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -36,6 +36,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   TextFieldCustom(
                     title: 'Nhập email',
+                    textInput: TextInputType.emailAddress,
+                    textInputAction: TextInputAction.next,
                     validatorFunction: (value) {
                       if (value.isEmpty) {
                         return 'Vui lòng nhâp email';

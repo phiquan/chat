@@ -6,14 +6,17 @@ class TextFieldCustom extends StatelessWidget {
   final Function(String value) onChange;
   final Function(String value) validatorFunction;
   final TextEditingController textEditingController;
+  final TextInputType textInput;
+  final TextInputAction textInputAction;
 
-  const TextFieldCustom(
-      {Key key,
-      this.hintText,
-      this.onChange,
-      this.validatorFunction,
-      this.title,
-      this.textEditingController})
+  const TextFieldCustom({Key key,
+    this.hintText,
+    this.onChange,
+    this.validatorFunction,
+    this.title,
+    this.textEditingController,
+    this.textInput,
+    this.textInputAction})
       : super(key: key);
 
   @override
@@ -30,9 +33,11 @@ class TextFieldCustom extends StatelessWidget {
         ),
         TextFormField(
           controller: textEditingController,
+          keyboardType: textInput ?? TextInputType.text,
+          textInputAction: textInputAction ?? TextInputAction.done,
           decoration: InputDecoration(
             contentPadding:
-                const EdgeInsets.only(left: 15, top: 5, bottom: 10, right: 10),
+            const EdgeInsets.only(left: 15, top: 5, bottom: 10, right: 10),
             hintText: hintText,
             hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
             filled: true,
