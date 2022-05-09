@@ -6,8 +6,8 @@ class InforRow extends StatelessWidget {
   final String image;
   final String title;
   final Function onTap;
-
-  const InforRow({Key key, this.image, this.title, this.onTap})
+  final Widget suffix;
+  const InforRow({Key key, this.image, this.title, this.onTap, this.suffix})
       : super(key: key);
 
   @override
@@ -46,7 +46,7 @@ class InforRow extends StatelessWidget {
                     ),
                   ],
                 ),
-                const Icon(Icons.navigate_next)
+                suffix ?? const SizedBox.shrink(),
               ],
             ),
           ),

@@ -1,3 +1,5 @@
+import 'package:chat/local/get_local.dart';
+import 'package:chat/local/set_local.dart';
 import 'package:chat/screen/login/text_field.dart';
 import 'package:chat/screen/navigation.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +17,19 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController passController = TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    getEmail();
+  }
+
+  Future getEmail() async {
+    Map<String, Object> data = await GetLocal.getLoginEmail();
+    if (data['email'].toString().isNotEmpty) {
+      Get.to(() => const BodyNavigationBar());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     title: 'Nhập email',
                     textInput: TextInputType.emailAddress,
                     textInputAction: TextInputAction.next,
+                    textEditingController: emailController,
                     validatorFunction: (value) {
                       if (value.isEmpty) {
                         return 'Vui lòng nhâp email';
@@ -54,6 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   TextFieldCustom(
                     title: 'Nhập mật khẩu',
+                    textEditingController: passController,
                     validatorFunction: (value) {
                       if (value.isEmpty) {
                         return 'Vui lòng nhập mật khẩu';
@@ -138,10 +155,11 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buttonLogin(){
+  Widget _buttonLogin() {
     return GestureDetector(
       onTap: () {
         if (_formKey.currentState.validate()) {
+          SetLocal.setLoginEmail(emailController.text, passController.text);
           Get.to(() => const BodyNavigationBar());
         } else {
           Get.dialog(_dialogWarning());

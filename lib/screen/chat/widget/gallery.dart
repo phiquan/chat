@@ -44,7 +44,7 @@ class _GalleryState extends State<Gallery> {
     final recentAlbum = albums.first;
     final recentAssets = await recentAlbum.getAssetListRange(
       start: 0, // start at index 0
-      end: 1000000, // end at a very big index (to get all the assets)
+      end: 10, // end at a very big index (to get all the assets)
     );
 
     setState(() => assets = recentAssets);
@@ -144,10 +144,11 @@ class _GalleryState extends State<Gallery> {
               child: Expanded(
                 child: GridView.builder(
                     controller: widget.scrollControllerPicker,
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                        crossAxisSpacing: 1,
-                        mainAxisSpacing: 1),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            crossAxisSpacing: 1,
+                            mainAxisSpacing: 1),
                     itemCount: assets.length,
                     itemBuilder: (_, index) {
                       return FutureBuilder<File>(
@@ -163,78 +164,68 @@ class _GalleryState extends State<Gallery> {
                           return GetBuilder<ChatMessagerController>(
                               init: ChatMessagerController(),
                               builder: (ChatMessagerController controller) {
+                                return InkWell(
+                                  // ignore: void_checks
+                                  onTap: (){
+                                    if (assets[index].type ==
+                                        AssetType.image) {
+                                      chatMessageController
+                                          .updateImagePath(fileData.path);
 
-                                return Stack(children: [
-                                  Positioned.fill(
-                                    child: InkWell(
-                                      onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  ZoomImage(
-                                                    image: null,
-                                                    indexImage:
-                                                        fileData.path.hashCode,
-                                                    nameUser: 'name user',
-                                                    imageFile: fileData,
-                                                    idConversationChat:
-                                                        widget.idConversation,
-                                                    idPhanLoai: 2,
-                                                    userID: widget.userID,
-                                                  )),
-                                        ).then((value) => setState(() {}));
-                                      },
-                                      child: controller.imageSelected
-                                                  .contains(fileData.path) ==
-                                              true
-                                          ? Image.file(
-                                              fileData,
-                                              color: Colors.white10
-                                                  .withOpacity(0.5),
-                                              fit: BoxFit.cover,
-                                              colorBlendMode:
-                                                  BlendMode.modulate,
-                                            )
-                                          : Image.file(
-                                              fileData,
-                                              fit: BoxFit.cover,
-                                            ),
-                                    ),
-                                  ),
-                                  Positioned(
-                                    right: 5,
-                                    top: 5,
-                                    child: InkWell(
-                                      // ignore: void_checks
-                                      onTap: () async {
-                                        if (kDebugMode) {
-                                          print("hello");
-                                        }
-
-                                        if (assets[index].type ==
-                                            AssetType.image) {
+                                      if (chatMessageController
+                                          .imageSelected
+                                          .contains(
                                           chatMessageController
-                                              .updateImagePath(fileData.path);
-
-                                          if (chatMessageController
-                                                  .imageSelected
-                                                  .contains(
-                                                      chatMessageController
-                                                          .image) ==
-                                              false) {
-                                            chatMessageController.imageSelected
-                                                .add(chatMessageController
-                                                    .image);
-                                          } else {
-                                            chatMessageController.imageSelected
-                                                .remove(chatMessageController
-                                                    .image);
-                                          }
-                                        } else {
-                                          return 0;
-                                        }
-                                      },
+                                              .image) ==
+                                          false) {
+                                        chatMessageController.imageSelected
+                                            .add(chatMessageController
+                                            .image);
+                                      } else {
+                                        chatMessageController.imageSelected
+                                            .remove(chatMessageController
+                                            .image);
+                                      }
+                                    } else {
+                                      return 0;
+                                    }
+                                  },
+                                  child: Stack(children: [
+                                    Positioned.fill(
+                                      child: GestureDetector(
+                                        onLongPress: () {
+                                          Get.to(() => ZoomImage(
+                                                image: null,
+                                                indexImage:
+                                                    fileData.path.hashCode,
+                                                nameUser: 'name user',
+                                                imageFile: fileData,
+                                                idConversationChat:
+                                                    widget.idConversation,
+                                                idPhanLoai: 2,
+                                                userID: widget.userID,
+                                              ));
+                                        },
+                                        child: controller.imageSelected
+                                                    .contains(fileData.path) ==
+                                                true
+                                            ? Image.file(
+                                                fileData,
+                                                color: Colors.white10
+                                                    .withOpacity(0.5),
+                                                fit: BoxFit.cover,
+                                                colorBlendMode:
+                                                    BlendMode.modulate,
+                                              )
+                                            : Image.file(
+                                                fileData,
+                                                fit: BoxFit.cover,
+                                              ),
+                                      ),
+                                    ),
+                                    Positioned(
+                                      right: 5,
+                                      top: 5,
                                       child: Container(
                                         width: 25,
                                         height: 25,
@@ -271,8 +262,8 @@ class _GalleryState extends State<Gallery> {
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ]);
+                                  ]),
+                                );
                               });
                         },
                       );

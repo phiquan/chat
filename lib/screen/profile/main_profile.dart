@@ -1,10 +1,34 @@
+import 'package:chat/local/get_local.dart';
+import 'package:chat/local/remove_local.dart';
+import 'package:chat/local/set_local.dart';
 import 'package:chat/screen/login/login_screen.dart';
 import 'package:chat/screen/profile/component/inforRow.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ProFile extends StatelessWidget {
+class ProFile extends StatefulWidget {
   const ProFile({Key key}) : super(key: key);
+
+  @override
+  State<ProFile> createState() => _ProFileState();
+}
+
+class _ProFileState extends State<ProFile> {
+  bool checkSwitch = false;
+
+  Future checkSwitchFingerprint() async {
+    bool temp = await GetLocal.getSwitchFingerprint();
+    setState(() {
+      checkSwitch = temp;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    checkSwitchFingerprint();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +62,26 @@ class ProFile extends StatelessWidget {
             title: 'Cài đặt',
           ),
           InforRow(
+            title: 'Bật xác thực sinh trắc',
+            suffix: CupertinoSwitch(
+              value: checkSwitch,
+              activeColor: Colors.blue,
+              trackColor: Colors.grey,
+              thumbColor: Colors.white,
+              onChanged: (val) {
+                setState(() {
+                  checkSwitch = val;
+                });
+                SetLocal.setSwitchFingerprint(val);
+              },
+            ),
+          ),
+          InforRow(
             title: 'Đăng xuất',
             onTap: () {
+              RemoveLocal.removeLogin();
               Get.to(() => const LoginScreen());
+              Get.close(1);
             },
           ),
         ],
