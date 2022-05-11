@@ -1,3 +1,4 @@
+import 'package:chat/custom/text_chat.dart';
 import 'package:chat/custom/waiting.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
@@ -16,45 +17,28 @@ class _WebWiewState extends State<WebWiew> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _appBar(),
-      body: SafeArea(
-        child: InAppWebView(
-          initialUrlRequest: URLRequest(url: Uri.parse(widget.url)),
-          onLoadStart: (controller, url) {
-            Waiting.showWatting();
-          },
-          onLoadStop: (controller, url) {
-            Waiting.hideWatting();
-          },
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: Text(
+          widget.url,
+          style: const TextStyle(color: Colors.grey),
+        ),
+        titleSpacing: 0,
+        leading: InkWell(
+          onTap: () => Get.back(),
+          child: const Padding(
+            padding: EdgeInsets.only(left: 8.0),
+            child: Icon(Icons.arrow_back_ios, color: Colors.grey),
+          ),
         ),
       ),
-    );
-  }
-
-  Widget _appBar() {
-    return AppBar(
-      backgroundColor: Colors.white,
-      title: Row(
-        children: [
-          InkWell(
-            onTap: () {
-              Get.back();
-            },
-            child: const Icon(
-              Icons.arrow_back_ios,
-              color: Colors.grey,
-            ),
-          ),
-          const SizedBox(width: 5),
-          SizedBox(
-            width: Get.width - 70,
-            child: Text(
-              widget.url,
-              style: const TextStyle(color: Colors.grey),
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-        ],
+      body: SafeArea(
+        child: InAppWebView(
+          initialUrlRequest:
+              URLRequest(url: Uri.parse(TextX.convertHttps(widget.url))),
+          onLoadStart: (_, __) => Waiting.showWatting(),
+          onLoadStop: (_, __) => Waiting.hideWatting(),
+        ),
       ),
     );
   }
