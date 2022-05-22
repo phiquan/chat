@@ -1,8 +1,5 @@
 import 'package:chat/controller/auth_controller.dart';
-import 'package:chat/local/get_local.dart';
-import 'package:chat/local/set_local.dart';
 import 'package:chat/screen/login/text_field.dart';
-import 'package:chat/screen/navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -18,19 +15,6 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController passController = TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  @override
-  void initState() {
-    super.initState();
-    // getEmail();
-  }
-
-  Future getEmail() async {
-    Map<String, Object> data = await GetLocal.getLoginEmail();
-    if (data['email'].toString().isNotEmpty) {
-      Get.to(() => const BodyNavigationBar());
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
