@@ -1,3 +1,4 @@
+import 'package:chat/controller/auth_controller.dart';
 import 'package:chat/local/get_local.dart';
 import 'package:chat/local/set_local.dart';
 import 'package:chat/screen/login/text_field.dart';
@@ -21,7 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
-    getEmail();
+    // getEmail();
   }
 
   Future getEmail() async {
@@ -158,9 +159,10 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _buttonLogin() {
     return GestureDetector(
       onTap: () {
+        Get.focusScope.unfocus();
         if (_formKey.currentState.validate()) {
-          SetLocal.setLoginEmail(emailController.text, passController.text);
-          Get.to(() => const BodyNavigationBar());
+          AuthController.instance
+              .login(emailController.text, passController.text);
         } else {
           Get.dialog(_dialogWarning());
         }

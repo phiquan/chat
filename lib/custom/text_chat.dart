@@ -30,13 +30,15 @@ class TextX {
             if (texts[e]) {
               return TextSpan(
                   text: e,
-                  style: const TextStyle(color: Colors.blue,decoration: TextDecoration.underline),
+                  style: const TextStyle(
+                      color: Colors.blue, decoration: TextDecoration.underline),
                   recognizer: TapGestureRecognizer()
                     ..onTap = () {
                       Get.to(() => WebWiew(url: e));
                     });
             } else {
-              return TextSpan(text: e,style: const TextStyle(color: Colors.black));
+              return TextSpan(
+                  text: e, style: const TextStyle(color: Colors.black));
             }
           }).toList(),
         ),
@@ -44,7 +46,7 @@ class TextX {
     );
   }
 
-  static String convertHttps(String text){
+  static String convertHttps(String text) {
     List<String> cutHttps = text.split('https://');
     String result;
     if (cutHttps.length == 2) {

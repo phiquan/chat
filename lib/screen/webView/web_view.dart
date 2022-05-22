@@ -36,8 +36,8 @@ class _WebWiewState extends State<WebWiew> {
         child: InAppWebView(
           initialUrlRequest:
               URLRequest(url: Uri.parse(TextX.convertHttps(widget.url))),
-          onLoadStart: (_, __) => Waiting.showWatting(),
-          onLoadStop: (_, __) => Waiting.hideWatting(),
+          onLoadStart: (_, __) => Waiting.showWaiting(),
+          onLoadStop: (_, __) => Waiting.hideWaiting(),
         ),
       ),
     );

@@ -1,11 +1,9 @@
+import 'package:chat/controller/auth_controller.dart';
 import 'package:chat/local/get_local.dart';
-import 'package:chat/local/remove_local.dart';
 import 'package:chat/local/set_local.dart';
-import 'package:chat/screen/login/login_screen.dart';
 import 'package:chat/screen/profile/component/inforRow.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class ProFile extends StatefulWidget {
   const ProFile({Key key}) : super(key: key);
@@ -79,9 +77,7 @@ class _ProFileState extends State<ProFile> {
           InforRow(
             title: 'Đăng xuất',
             onTap: () {
-              RemoveLocal.removeLogin();
-              Get.to(() => const LoginScreen());
-              Get.close(1);
+              AuthController.instance.logout();
             },
           ),
         ],

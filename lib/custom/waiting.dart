@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 class Waiting {
   static bool checkWaiting = false;
 
-  static void showWatting() {
+  static void showWaiting() {
     if (checkWaiting) return;
     checkWaiting = true;
     showDialog(
@@ -25,7 +25,7 @@ class Waiting {
     );
   }
 
-  static void hideWatting() {
+  static void hideWaiting() {
     if (checkWaiting) {
       checkWaiting = false;
       Navigator.pop(Get.overlayContext);
