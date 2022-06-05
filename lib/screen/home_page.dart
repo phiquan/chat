@@ -5,7 +5,6 @@ import 'package:chat/Common/firestore_constants.dart';
 import 'package:chat/Common/vertical.dart';
 import 'package:chat/controller/auth.dart';
 import 'package:chat/controller/home_controller.dart';
-import 'package:chat/custom/text_field.dart';
 import 'package:chat/model/user_Model.dart';
 import 'package:chat/screen/chat/widget/chat_page.dart';
 import 'package:chat/screen/login/login_page.dart';
@@ -150,15 +149,13 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-            centerTitle: true,
-            title: const Text('Chat Encrypted')),
         body: WillPopScope(
           onWillPop: onBackPress,
           child: Stack(
             children: [
               Column(
                 children: [
+                  vertical30,
                   buildSearchBar(),
                   Expanded(
                     child: StreamBuilder<QuerySnapshot>(

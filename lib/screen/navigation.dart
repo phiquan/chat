@@ -37,8 +37,8 @@ class BodyNavigationBarState extends State<BodyNavigationBar>
           index: _selectedIndex,
           children: [
             listCheck[0] ? const HomePage() : const SizedBox.shrink(),
-            listCheck[1] ? const AddFriend() : const SizedBox.shrink(),
-            listCheck[2] ? const ProFile() : const SizedBox.shrink(),
+            // listCheck[1] ? const AddFriend() : const SizedBox.shrink(),
+            listCheck[1] ? const ProFile() : const SizedBox.shrink(),
           ],
         ),
       ),
@@ -49,10 +49,10 @@ class BodyNavigationBarState extends State<BodyNavigationBar>
             icon: Icon(Icons.chat_bubble),
             label: 'Chat',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_add),
-            label: 'Add',
-          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.person_add),
+          //   label: 'Add',
+          // ),
           BottomNavigationBarItem(
             icon: Icon(Icons.people),
             label: 'Profile',

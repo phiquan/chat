@@ -1,23 +1,22 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter/foundation.dart';
+
 class InforRow extends StatelessWidget {
   final Icon icon;
   final String title;
   final Function onTap;
   final Widget suffix;
+
   const InforRow({Key key, this.icon, this.title, this.onTap, this.suffix})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){
-        if (kDebugMode) {
-          print('onTap infoRow');
+      onTap: () {
+        if (onTap != null) {
+          onTap();
         }
-        onTap();
       },
       child: Card(
         child: SizedBox(
@@ -30,7 +29,7 @@ class InforRow extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Container(
+                    SizedBox(
                       height: 40,
                       width: 40,
                       child: icon,

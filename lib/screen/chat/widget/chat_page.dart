@@ -201,26 +201,35 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          centerTitle: true,
-          title: Text('Chatting with ${widget.peerNickname}'.trim())),
+          centerTitle: true, title: Text(widget.peerNickname.trim())),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          child: Column(
-            children: [
-              buildListMessage(context),
-              buildMessageInput(),
-            ],
-          ),
+        child: Stack(
+          children: [
+            SizedBox(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              child: Image.asset(
+                'assets/images/deltabackground.jpg',
+                fit: BoxFit.cover,
+              ),
+            ),
+            Column(
+              children: [
+                buildListMessage(context),
+                buildMessageInput(),
+              ],
+            )
+          ],
         ),
       ),
     );
   }
 
   Widget buildMessageInput() {
-    return SizedBox(
+    return Container(
       width: double.infinity,
       height: 50,
+      color: Colors.white,
       child: Row(
         children: [
           Container(

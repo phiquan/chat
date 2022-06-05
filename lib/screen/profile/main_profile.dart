@@ -7,7 +7,7 @@ import 'package:chat/local/get_local.dart';
 import 'package:chat/local/set_local.dart';
 import 'package:chat/screen/login/login_page.dart';
 import 'package:chat/screen/profile/component/inforRow.dart';
-import 'package:chat/screen/profile/thong_tin_tai_khoan.dart';
+import 'package:chat/screen/profile/widget/thong_tin_tai_khoan.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

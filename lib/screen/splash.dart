@@ -1,6 +1,8 @@
 import 'package:chat/Common/color.dart';
 import 'package:chat/controller/auth.dart';
+import 'package:chat/local/get_local.dart';
 import 'package:chat/screen/login/login_page.dart';
+import 'package:chat/screen/login/security.dart';
 import 'package:chat/screen/navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -24,13 +26,20 @@ class _SplashPageState extends State<SplashPage> {
   void checkSignedIn() async {
     AuthProvider authProvider = context.read<AuthProvider>();
     bool isLoggedIn = await authProvider.isLoggedIn();
+    bool checkSwitchFingerprint = await GetLocal.getSwitchFingerprint();
     if (isLoggedIn) {
-      Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => const BodyNavigationBar()));
-      return;
+      if (checkSwitchFingerprint) {
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => const FingerPrintAuth()));
+      } else {
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => const BodyNavigationBar()));
+        return;
+      }
+    } else {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => const LoginPage()));
     }
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => const LoginPage()));
   }
 
   @override
@@ -49,7 +58,7 @@ class _SplashPageState extends State<SplashPage> {
               height: 20,
             ),
             const CircularProgressIndicator(
-              color: AppColors.lightGrey,
+              color: Colors.green,
             ),
           ],
         ),
