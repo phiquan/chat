@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'package:dart_des/dart_des.dart';
 
 class Des {
+  Des._();
+
   static String key = '12345678';
 
   static String encrypted(String text) {

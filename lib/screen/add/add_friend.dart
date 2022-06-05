@@ -1,8 +1,6 @@
-import 'package:chat/screen/add/widget/qr_camera.dart';
 import 'package:chat/screen/add/widget/qr_phone.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class AddFriend extends StatelessWidget {
   const AddFriend({Key key}) : super(key: key);
@@ -56,7 +54,7 @@ class AddFriend extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                Get.to(() => const QRCodeScreen());
+                // Get.to(() => const QRCodeScreen());
               },
               child: const Icon(
                 Icons.qr_code,

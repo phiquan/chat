@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter/foundation.dart';
 class InforRow extends StatelessWidget {
-  final String image;
+  final Icon icon;
   final String title;
   final Function onTap;
   final Widget suffix;
-  const InforRow({Key key, this.image, this.title, this.onTap, this.suffix})
+  const InforRow({Key key, this.icon, this.title, this.onTap, this.suffix})
       : super(key: key);
 
   @override
@@ -33,9 +33,7 @@ class InforRow extends StatelessWidget {
                     Container(
                       height: 40,
                       width: 40,
-                      decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(30)),
-                          color: Colors.grey),
+                      child: icon,
                     ),
                     const SizedBox(
                       width: 10,

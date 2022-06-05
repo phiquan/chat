@@ -48,7 +48,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         return null;
                       }
                     },
-                    onChange: (value) {},
                   ),
                   const SizedBox(
                     height: 15,
@@ -62,9 +61,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       } else {
                         return null;
                       }
-                    },
-                    onChange: (value) {
-                      setState(() {});
                     },
                   ),
                   const SizedBox(

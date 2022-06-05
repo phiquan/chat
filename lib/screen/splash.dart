@@ -1,49 +1,57 @@
+import 'package:chat/Common/color.dart';
+import 'package:chat/controller/auth.dart';
+import 'package:chat/screen/login/login_page.dart';
+import 'package:chat/screen/navigation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class Splash extends StatefulWidget {
-  const Splash({Key key}) : super(key: key);
+class SplashPage extends StatefulWidget {
+  const SplashPage({Key key}) : super(key: key);
 
   @override
-  _SplashState createState() => _SplashState();
+  State<SplashPage> createState() => _SplashPageState();
 }
 
-class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
-  AnimationController _controller;
-  Animation<double> _animation;
-
+class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      duration: const Duration(milliseconds: 2500),
-      vsync: this,
-    );
-    _controller.forward();
-    _animation = CurvedAnimation(
-      parent: _controller,
-      curve: Curves.fastOutSlowIn,
-    );
+    Future.delayed(const Duration(seconds: 5), () {
+      checkSignedIn();
+    });
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    _controller.dispose();
+  void checkSignedIn() async {
+    AuthProvider authProvider = context.read<AuthProvider>();
+    bool isLoggedIn = await authProvider.isLoggedIn();
+    if (isLoggedIn) {
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => const BodyNavigationBar()));
+      return;
+    }
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => const LoginPage()));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: ScaleTransition(
-          scale: _animation,
-          child: SizedBox(
-              height: 200,
-              width: 200,
-              child: Image.asset(
-                'assets/images/logo.png',
-                fit: BoxFit.cover,
-              )),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.asset(
+              'assets/images/logo.png',
+              width: 300,
+              height: 300,
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            const CircularProgressIndicator(
+              color: AppColors.lightGrey,
+            ),
+          ],
         ),
       ),
     );

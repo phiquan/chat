@@ -1,10 +1,11 @@
 import 'package:chat/screen/webView/web_view.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class TextX {
-  static Widget chat(String text) {
+  TextX._();
+
+  static Widget chat(String text,BuildContext context) {
     Map<String, bool> texts = {};
     RegExp exp = RegExp(r'(?:(?:https?|ftp):\/\/)?[\w/\-?=%.]+\.[\w/\-?=%.]+');
     while (text.isNotEmpty) {
@@ -19,29 +20,24 @@ class TextX {
         text = '';
       }
     }
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 32,
-        vertical: 32,
-      ),
-      child: RichText(
-        text: TextSpan(
-          children: texts.keys.map((e) {
-            if (texts[e]) {
-              return TextSpan(
-                  text: e,
-                  style: const TextStyle(
-                      color: Colors.blue, decoration: TextDecoration.underline),
-                  recognizer: TapGestureRecognizer()
-                    ..onTap = () {
-                      Get.to(() => WebWiew(url: e));
-                    });
-            } else {
-              return TextSpan(
-                  text: e, style: const TextStyle(color: Colors.black));
-            }
-          }).toList(),
-        ),
+    return RichText(
+      text: TextSpan(
+        children: texts.keys.map((e) {
+          if (texts[e]) {
+            return TextSpan(
+                text: e,
+                style: const TextStyle(
+                    color: Colors.blue, decoration: TextDecoration.underline),
+                recognizer: TapGestureRecognizer()
+                  ..onTap = () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => WebWiew(url: e)));
+                  });
+          } else {
+            return TextSpan(
+                text: e, style: const TextStyle(color: Colors.white));
+          }
+        }).toList(),
       ),
     );
   }

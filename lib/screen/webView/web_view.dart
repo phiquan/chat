@@ -2,7 +2,6 @@ import 'package:chat/custom/text_chat.dart';
 import 'package:chat/custom/waiting.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:get/get.dart';
 
 class WebWiew extends StatefulWidget {
   final String url;
@@ -18,19 +17,12 @@ class _WebWiewState extends State<WebWiew> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.blue,
         title: Text(
           widget.url,
-          style: const TextStyle(color: Colors.grey),
+          style: const TextStyle(color: Colors.white),
         ),
         titleSpacing: 0,
-        leading: InkWell(
-          onTap: () => Get.back(),
-          child: const Padding(
-            padding: EdgeInsets.only(left: 8.0),
-            child: Icon(Icons.arrow_back_ios, color: Colors.grey),
-          ),
-        ),
       ),
       body: SafeArea(
         child: InAppWebView(

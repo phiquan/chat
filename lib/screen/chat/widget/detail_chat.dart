@@ -1,4 +1,9 @@
+import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:chat/encrypted/des.dart';
+import 'package:chat/encrypted/image.dart';
 import 'package:chat/screen/chat/widget/gallery.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -66,6 +71,12 @@ class _DetailChatState extends State<DetailChat> {
         body: Stack(
           children: [
             _background(),
+            Container(
+              height: 300,
+              width: 300,
+              color: Colors.grey,
+              child: image ?? const SizedBox(),
+            ),
             Align(
               alignment: Alignment.bottomLeft,
               child: _send(),
@@ -243,7 +254,8 @@ class _DetailChatState extends State<DetailChat> {
               if (kDebugMode) {
                 print(Des.encrypted(messageContentController.text));
                 print('---------------');
-                print(Des.decrypted(Des.encrypted(messageContentController.text)));
+                print(Des.decrypted(
+                    Des.encrypted(messageContentController.text)));
               }
               if (messageContentController.text != null &&
                   messageContentController.text != "") {
@@ -271,18 +283,50 @@ class _DetailChatState extends State<DetailChat> {
 
   final picker = ImagePicker();
 
+  Image image;
+
   Future chupAnh() async {
     try {
       final pickedFile = await picker.pickImage(
-        source: ImageSource.camera,
+        source: ImageSource.gallery,
       );
+      if (pickedFile != null) {
 
-      if (pickedFile == null) return;
-      // var fileUpload = File(pickedFile.path);
 
+        print('chuẩn bị mã hóa');
+        File imagefile = File(pickedFile.path); //convert Path to File
+        Uint8List imagebytes = await imagefile.readAsBytes();
+        String text = base64.encode(imagebytes);
+        // print(text);
+        // print('+_+_+_+_+');
+        // String a = Des.encrypted(text);
+        // print('@@@@');
+        // print(a);
+        // print('done mã hóa');
+
+        // setState(() {
+        //   image = DesImage.decrypted(a);
+        // });
+      }
+      // print('+++++++++++++++++++++++++++');
     } catch (e) {
       Get.snackbar('Thông Báo', 'Chụp ảnh không thành công',
           snackPosition: SnackPosition.TOP, backgroundColor: Colors.grey[200]);
     }
+  }
+}
+
+class testImage extends GetxController{
+  String data;
+
+  void updateData(String text){
+    data = text;
+    update();
+  }
+
+  void decryptedData(String text){
+    Des.encrypted(text);
+
+    DesImage.decrypted(text);
   }
 }

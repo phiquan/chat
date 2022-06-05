@@ -1,5 +1,5 @@
 import 'package:chat/screen/add/add_friend.dart';
-import 'package:chat/screen/chat/chat_screen.dart';
+import 'package:chat/screen/home_page.dart';
 import 'package:chat/screen/profile/main_profile.dart';
 import 'package:flutter/material.dart';
 
@@ -36,7 +36,7 @@ class BodyNavigationBarState extends State<BodyNavigationBar>
         child: IndexedStack(
           index: _selectedIndex,
           children: [
-            listCheck[0] ? const ChatScreen() : const SizedBox.shrink(),
+            listCheck[0] ? const HomePage() : const SizedBox.shrink(),
             listCheck[1] ? const AddFriend() : const SizedBox.shrink(),
             listCheck[2] ? const ProFile() : const SizedBox.shrink(),
           ],

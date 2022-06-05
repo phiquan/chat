@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 class TextFieldCustom extends StatelessWidget {
   final String title;
   final String hintText;
-  final Function(String value) onChange;
   final Function(String value) validatorFunction;
   final TextEditingController textEditingController;
   final TextInputType textInput;
@@ -11,7 +10,6 @@ class TextFieldCustom extends StatelessWidget {
 
   const TextFieldCustom({Key key,
     this.hintText,
-    this.onChange,
     this.validatorFunction,
     this.title,
     this.textEditingController,
@@ -69,7 +67,6 @@ class TextFieldCustom extends StatelessWidget {
           ),
           autovalidateMode: AutovalidateMode.onUserInteraction,
           validator: (value) => validatorFunction(value),
-          onChanged: (value) => onChange(value),
         ),
       ],
     );
