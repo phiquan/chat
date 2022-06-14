@@ -24,7 +24,7 @@ class _FingerPrintAuthState extends State<FingerPrintAuth> {
           biometricHint: 'Vân tay',
         ),
         localizedReason: 'Thử lại',
-        biometricOnly: true,
+        biometricOnly: false,
         useErrorDialogs: true,
       );
       if (authenticated) {

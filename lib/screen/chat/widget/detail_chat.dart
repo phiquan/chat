@@ -252,10 +252,10 @@ class _DetailChatState extends State<DetailChat> {
           InkWell(
             onTap: () {
               if (kDebugMode) {
-                print(Des.encrypted(messageContentController.text));
-                print('---------------');
-                print(Des.decrypted(
-                    Des.encrypted(messageContentController.text)));
+                // print(Des.encrypted(messageContentController.text));
+                // print('---------------');
+                // print(Des.decrypted(
+                //     Des.encrypted(messageContentController.text)));
               }
               if (messageContentController.text != null &&
                   messageContentController.text != "") {
@@ -316,17 +316,3 @@ class _DetailChatState extends State<DetailChat> {
   }
 }
 
-class testImage extends GetxController{
-  String data;
-
-  void updateData(String text){
-    data = text;
-    update();
-  }
-
-  void decryptedData(String text){
-    Des.encrypted(text);
-
-    DesImage.decrypted(text);
-  }
-}

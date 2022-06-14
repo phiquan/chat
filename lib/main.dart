@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
       ],
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Smart Talk',
+        title: 'Chat Crypted',
         home: SplashPage(), //Splash
       ),
     );

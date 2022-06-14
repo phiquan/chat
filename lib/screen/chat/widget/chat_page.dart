@@ -3,7 +3,6 @@ import 'package:chat/Common/color.dart';
 import 'package:chat/Common/firestore_constants.dart';
 import 'package:chat/controller/auth.dart';
 import 'package:chat/controller/chat_controller.dart';
-import 'package:chat/custom/text_chat.dart';
 import 'package:chat/custom/text_field.dart';
 import 'package:chat/encrypted/des.dart';
 import 'package:chat/model/chat_model.dart';
@@ -103,14 +102,21 @@ class _ChatPageState extends State<ChatPage> {
     ImagePicker imagePicker = ImagePicker();
     XFile pickedFile;
     pickedFile = await imagePicker.pickImage(source: ImageSource.gallery);
+    // if (pickedFile != null) {
+    //   imageFile = File(pickedFile.path);
+    //   if (imageFile != null) {
+    //     setState(() {
+    //       isLoading = true;
+    //     });
+    //     uploadImageFile();
+    //   }
+    // }
     if (pickedFile != null) {
-      imageFile = File(pickedFile.path);
-      if (imageFile != null) {
-        setState(() {
-          isLoading = true;
-        });
-        uploadImageFile();
-      }
+      String encrypted = await Des.encryptedImage(pickedFile);
+      print('+__+_+_+__');
+      print(encrypted);
+      onSendMessage(encrypted, 2);
+      print('+__+_+_+__________');
     }
   }
 
@@ -163,8 +169,8 @@ class _ChatPageState extends State<ChatPage> {
   void onSendMessage(String content, int type) {
     if (content.trim().isNotEmpty) {
       textEditingController.clear();
-      chatProvider.sendChatMessage(Des.encrypted(content), type, groupChatId,
-          currentUserId, widget.peerId);
+      chatProvider.sendChatMessage(type == 1 ? Des.encrypted(content) : content,
+          MessageType.text, groupChatId, currentUserId, widget.peerId);
       scrollController.animateTo(0,
           duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
     } else {
@@ -200,8 +206,8 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          centerTitle: true, title: Text(widget.peerNickname.trim())),
+      appBar:
+          AppBar(centerTitle: true, title: Text(widget.peerNickname.trim())),
       body: SafeArea(
         child: Stack(
           children: [
@@ -506,7 +512,7 @@ class _ChatPageState extends State<ChatPage> {
           color: color,
           borderRadius: BorderRadius.circular(10),
         ),
-        child: TextX.chat(Des.decrypted(chatContent), context));
+        child: Des.decrypted(chatContent, context));
   }
 
   Widget errorContainer() {
