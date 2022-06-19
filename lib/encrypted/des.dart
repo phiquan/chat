@@ -39,9 +39,6 @@ class Des {
       String dataImage = '${Des.decryptedText(data[0])}${data[1]}';
       return Image.memory(
         base64.decode(dataImage),
-        // width: 200,
-        // height: 200,
-        // fit: BoxFit.co,
       );
     } else {
       return TextX.chat(Des.decryptedText(text), context);
