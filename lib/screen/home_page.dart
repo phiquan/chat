@@ -38,7 +38,6 @@ class _HomePageState extends State<HomePage> {
   StreamController<bool> buttonClearController = StreamController<bool>();
   TextEditingController searchTextEditingController = TextEditingController();
 
-
   Future<bool> onBackPress() {
     openDialog();
     return Future.value(false);
@@ -150,56 +149,55 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: WillPopScope(
-          onWillPop: onBackPress,
-          child: Stack(
+      onWillPop: onBackPress,
+      child: Stack(
+        children: [
+          Column(
             children: [
-              Column(
-                children: [
-                  vertical30,
-                  buildSearchBar(),
-                  Expanded(
-                    child: StreamBuilder<QuerySnapshot>(
-                      stream: homeProvider.getFirestoreData(
-                          FirestoreConstants.pathUserCollection,
-                          _limit,
-                          _textSearch),
-                      builder: (BuildContext context,
-                          AsyncSnapshot<QuerySnapshot> snapshot) {
-                        if (snapshot.hasData) {
-                          if ((snapshot.data.docs.length ?? 0) > 0) {
-                            return ListView.separated(
-                              shrinkWrap: true,
-                              itemCount: snapshot.data.docs.length,
-                              itemBuilder: (context, index) => buildItem(
-                                  context, snapshot.data?.docs[index]),
-                              controller: scrollController,
-                              separatorBuilder:
-                                  (BuildContext context, int index) =>
-                                      const Divider(),
-                            );
-                          } else {
-                            return const Center(
-                              child: Text('No user found...'),
-                            );
-                          }
-                        } else {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              Positioned(
-                child: isLoading
-                    ? const CircularProgressIndicator()
-                    : const SizedBox.shrink(),
+              vertical30,
+              buildSearchBar(),
+              Expanded(
+                child: StreamBuilder<QuerySnapshot>(
+                  stream: homeProvider.getFirestoreData(
+                      FirestoreConstants.pathUserCollection,
+                      _limit,
+                      _textSearch),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (snapshot.hasData) {
+                      if ((snapshot.data.docs.length ?? 0) > 0) {
+                        return ListView.separated(
+                          shrinkWrap: true,
+                          itemCount: snapshot.data.docs.length,
+                          itemBuilder: (context, index) =>
+                              buildItem(context, snapshot.data?.docs[index]),
+                          controller: scrollController,
+                          separatorBuilder: (BuildContext context, int index) =>
+                              const Divider(),
+                        );
+                      } else {
+                        return const Center(
+                          child: Text('No user found...'),
+                        );
+                      }
+                    } else {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                  },
+                ),
               ),
             ],
           ),
-        ));
+          Positioned(
+            child: isLoading
+                ? const CircularProgressIndicator()
+                : const SizedBox.shrink(),
+          ),
+        ],
+      ),
+    ));
   }
 
   Widget buildSearchBar() {
@@ -238,7 +236,7 @@ class _HomePageState extends State<HomePage> {
                 }
               },
               decoration: const InputDecoration.collapsed(
-                hintText: 'Search here...',
+                hintText: 'Tìm kiếm ...',
                 hintStyle: TextStyle(color: AppColors.white),
               ),
             ),

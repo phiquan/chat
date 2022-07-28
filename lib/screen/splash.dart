@@ -1,4 +1,3 @@
-import 'package:chat/Common/color.dart';
 import 'package:chat/controller/auth.dart';
 import 'package:chat/local/get_local.dart';
 import 'package:chat/screen/login/login_page.dart';

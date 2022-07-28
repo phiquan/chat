@@ -4,9 +4,9 @@ import 'package:chat/Common/firestore_constants.dart';
 import 'package:chat/controller/auth.dart';
 import 'package:chat/controller/chat_controller.dart';
 import 'package:chat/custom/text_field.dart';
-import 'package:chat/encrypted/des.dart';
+import 'package:chat/encrypted/aes.dart';
+import 'package:chat/local/get_local.dart';
 import 'package:chat/model/chat_model.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -102,29 +102,11 @@ class _ChatPageState extends State<ChatPage> {
     ImagePicker imagePicker = ImagePicker();
     XFile pickedFile;
     pickedFile = await imagePicker.pickImage(source: ImageSource.gallery);
-    // if (pickedFile != null) {
-    //   imageFile = File(pickedFile.path);
-    //   if (imageFile != null) {
-    //     setState(() {
-    //       isLoading = true;
-    //     });
-    //     uploadImageFile();
-    //   }
-    // }
-    if (pickedFile != null) {
-      String encrypted = await Des.encryptedImage(pickedFile);
-      print('+__+_+_+__');
-      print(encrypted);
-      onSendMessage(encrypted, 2);
-      print('+__+_+_+__________');
-    }
-  }
 
-  void getSticker() {
-    focusNode.unfocus();
-    setState(() {
-      isShowSticker = !isShowSticker;
-    });
+    if (pickedFile != null) {
+      String encrypted = await Aes.encryptedImage(pickedFile);
+      onSendMessage(encrypted, 2);
+    }
   }
 
   Future<bool> onBackPressed() {
@@ -139,38 +121,26 @@ class _ChatPageState extends State<ChatPage> {
     return Future.value(false);
   }
 
-  // void _callPhoneNumber(String phoneNumber) async {
-  //   var url = 'tel://$phoneNumber';
-  //   if (await canLaunch(url)) {
-  //     await launch(url);
-  //   } else {
-  //     throw 'Error Occurred';
-  //   }
-  // }
-
-  void uploadImageFile() async {
-    String fileName = DateTime.now().millisecondsSinceEpoch.toString();
-    UploadTask uploadTask = chatProvider.uploadImageFile(imageFile, fileName);
-    try {
-      TaskSnapshot snapshot = await uploadTask;
-      imageUrl = await snapshot.ref.getDownloadURL();
-      setState(() {
-        isLoading = false;
-        onSendMessage(imageUrl, MessageType.image);
-      });
-    } on FirebaseException catch (e) {
-      setState(() {
-        isLoading = false;
-      });
-      Fluttertoast.showToast(msg: e.message ?? e.toString());
-    }
-  }
-
-  void onSendMessage(String content, int type) {
+  Future<void> onSendMessage(String content, int type) async {
+    bool check = await GetLocal.getEncryption();
     if (content.trim().isNotEmpty) {
       textEditingController.clear();
-      chatProvider.sendChatMessage(type == 1 ? Des.encrypted(content) : content,
-          MessageType.text, groupChatId, currentUserId, widget.peerId);
+      if (!check && type != 2) {
+        chatProvider.sendChatMessage(
+          content,
+          MessageType.text,
+          groupChatId,
+          currentUserId,
+          widget.peerId,
+        );
+      } else {
+        chatProvider.sendChatMessage(
+            type == 2 ? content : Aes.encrypted(content),
+            MessageType.text,
+            groupChatId,
+            currentUserId,
+            widget.peerId);
+      }
       scrollController.animateTo(0,
           duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
     } else {
@@ -261,7 +231,7 @@ class _ChatPageState extends State<ChatPage> {
             textCapitalization: TextCapitalization.sentences,
             controller: textEditingController,
             decoration:
-                kTextInputDecoration.copyWith(hintText: 'write here...'),
+                kTextInputDecoration.copyWith(hintText: 'nhập tin nhắn...'),
             onSubmitted: (value) {
               onSendMessage(textEditingController.text, MessageType.text);
             },
@@ -478,7 +448,7 @@ class _ChatPageState extends State<ChatPage> {
                             index, snapshot.data?.docs[index], context));
                   } else {
                     return const Center(
-                      child: Text('No messages...'),
+                      child: Text('Không có cuộc trò chuyện...'),
                     );
                   }
                 } else {
@@ -512,7 +482,7 @@ class _ChatPageState extends State<ChatPage> {
           color: color,
           borderRadius: BorderRadius.circular(10),
         ),
-        child: Des.decrypted(chatContent, context));
+        child: Aes.decrypted(chatContent, context));
   }
 
   Widget errorContainer() {

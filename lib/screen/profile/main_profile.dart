@@ -23,6 +23,7 @@ class _ProFileState extends State<ProFile> {
   AuthProvider authProvider;
   ProfileProvider profileProvider;
   bool checkSwitch = false;
+  bool checkEncryp = true;
   String name = '';
   String photoUrl = '';
 
@@ -32,6 +33,7 @@ class _ProFileState extends State<ProFile> {
     authProvider = context.read<AuthProvider>();
     profileProvider = context.read<ProfileProvider>();
     checkSwitchFingerprint();
+    checkEncryption();
     readLocal();
   }
 
@@ -39,6 +41,13 @@ class _ProFileState extends State<ProFile> {
     bool temp = await GetLocal.getSwitchFingerprint();
     setState(() {
       checkSwitch = temp;
+    });
+  }
+
+  Future checkEncryption() async {
+    bool temp = await GetLocal.getEncryption();
+    setState(() {
+      checkEncryp = temp;
     });
   }
 
@@ -85,6 +94,22 @@ class _ProFileState extends State<ProFile> {
               },
             ),
             icon: const Icon(Icons.fingerprint),
+          ),
+          InforRow(
+            title: 'Mã hóa tin nhắn',
+            suffix: CupertinoSwitch(
+              value: checkEncryp,
+              activeColor: Colors.blue,
+              trackColor: Colors.grey,
+              thumbColor: Colors.white,
+              onChanged: (val) {
+                setState(() {
+                  checkEncryp = val;
+                });
+                SetLocal.setEncryption(val);
+              },
+            ),
+            icon: const Icon(Icons.no_encryption),
           ),
           InforRow(
             title: 'Đăng xuất',

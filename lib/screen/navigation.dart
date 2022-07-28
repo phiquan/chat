@@ -1,4 +1,3 @@
-import 'package:chat/screen/add/add_friend.dart';
 import 'package:chat/screen/home_page.dart';
 import 'package:chat/screen/profile/main_profile.dart';
 import 'package:flutter/material.dart';
